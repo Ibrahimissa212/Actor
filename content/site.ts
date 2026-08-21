@@ -7,19 +7,18 @@ import type { Bi } from "@/lib/i18n";
  */
 
 export const profile = {
-  // TODO: replace with your real name
-  name: { he: "השם שלך", en: "Your Name" } satisfies Bi,
+  name: { he: "איברהים עיסא", en: "Ibrahim Issa" } satisfies Bi,
 
-  // Short role line shown under the name in the hero
+  // Short role line shown under the name in the hero (playful name pun)
   tagline: {
-    he: "שחקן · מהנדס תוכנה בהסבה לעולם המשחק",
-    en: "Actor · Software Engineer transitioning into acting",
+    he: "איברהים — ונהנים: צוחקים, מתרגשים, אוהבים, ועפים על החיים",
+    en: "Ibrahim — living it up: laughing, feeling, loving, and flying through life",
   } satisfies Bi,
 
-  // One-line hook for the hero
+  // One-line hook for the hero (the serious line)
   heroLine: {
-    he: "מספר סיפורים על הבמה ומול המצלמה — בקומדיה, בדרמה ובדמויות קיצון.",
-    en: "Telling stories on stage and on camera — in comedy, drama, and bold characters.",
+    he: "מהנדס תוכנה בוגר הטכניון ושחקן בוגר הסטודיו למשחק — עם ניסיון בהכנת אודישנים ובצילום לפרסומות.",
+    en: "Technion-graduate software engineer and studio-trained actor — with experience in audition prep and commercial shoots.",
   } satisfies Bi,
 
   // TODO: replace with your real location (optional)
@@ -31,8 +30,8 @@ export const about = {
 
   paragraphs: [
     {
-      he: "אני מהנדס תוכנה שעובד בהייטק, ובמקביל יצאתי למסע של הסבה לעולם המשחק — תחום שתמיד משך אותי. סיימתי לאחרונה קורס משחק בן חצי שנה בהסטודיו למשחק אצל גל אמיתי.",
-      en: "I'm a software engineer working in hi-tech, and I've embarked on a transition into acting — a craft that has always drawn me in. I recently completed a six-month acting course at Gal Amitai's Acting Studio.",
+      he: "אני מהנדס תוכנה בוגר הטכניון שעובד בהייטק, ובמקביל יצאתי למסע של הסבה לעולם המשחק — תחום שתמיד משך אותי. סיימתי לאחרונה קורס משחק בן חצי שנה בהסטודיו למשחק אצל גל אמיתי.",
+      en: "I'm a Technion-graduate software engineer working in hi-tech, and I've embarked on a transition into acting — a craft that has always drawn me in. I recently completed a six-month acting course at Gal Amitai's Acting Studio.",
     },
     {
       he: "במהלך הקורס עבדתי על דיאלוגים קומיים ודרמטיים, מונולוגים, ודמות קיצון מאתגרת — דמות של אדם עם שיתוק מוחין שאוהב את החיים: יוצא למסיבות, מטייל ומכיר אנשים חדשים. עבדתי גם רבות על משחק מול מצלמה.",
@@ -47,9 +46,11 @@ export const about = {
   // Small fact chips shown next to the bio
   facts: [
     { he: "הסטודיו למשחק — גל אמיתי", en: "Gal Amitai Acting Studio" },
+    { he: "בוגר הטכניון", en: "Technion graduate" },
     { he: "משחק על הבמה", en: "Stage acting" },
     { he: "משחק מול מצלמה", en: "On-camera acting" },
-    { he: "קומדיה ודרמה", en: "Comedy & drama" },
+    { he: "צילום לפרסומות", en: "Commercial shoots" },
+    { he: "הכנת אודישנים", en: "Audition prep" },
   ] satisfies Bi[],
 };
 
@@ -71,15 +72,13 @@ export const contact = {
     en: "Looking for representation, auditions, and collaborations. Feel free to reach out.",
   } satisfies Bi,
 
-  // TODO: replace with your real details
-  email: "your.email@example.com",
-  phone: "+972-50-000-0000",
+  email: "ibrahim.issa212@gmail.com",
+  phone: "+972-54-328-3232",
 
-  // TODO: add/remove social links. Leave url empty ("") to hide a link.
   socials: [
-    { label: "Instagram", url: "" },
-    { label: "WhatsApp", url: "" },
-    { label: "Spotlight / Backstage", url: "" },
+    { label: "Instagram", url: "https://www.instagram.com/ibrahim_issa/" },
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/ibrahim-issa-17409774/" },
+    { label: "Facebook", url: "https://www.facebook.com/ibrahim.issa.796" },
   ],
 
   // CV file lives in /public/cv/cv.pdf — replace that file with your own.
