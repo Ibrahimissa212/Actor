@@ -1,0 +1,10 @@
+{
+  // Deploy this project as a static site (Cloudflare Workers Static Assets).
+  // Our Next.js app uses `output: "export"`, which builds plain HTML/CSS/JS
+  // into the `out/` folder. No server runtime / OpenNext is needed.
+  "name": "actor",
+  "compatibility_date": "2026-08-20",
+  "assets": {
+    "directory": "./out"
+  }
+}
