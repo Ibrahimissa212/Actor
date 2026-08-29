@@ -18,10 +18,7 @@ export function VideoPlayer({
   autoplay = false,
 }: VideoPlayerProps) {
   return (
-    <div
-      className="relative w-full overflow-hidden rounded-xl bg-black"
-      style={{ aspectRatio: "16 / 9" }}
-    >
+    <div className="flex w-full items-center justify-center">
       <video
         src={src}
         poster={poster}
@@ -30,7 +27,7 @@ export function VideoPlayer({
         autoPlay={autoplay}
         playsInline
         preload="metadata"
-        className="absolute inset-0 h-full w-full bg-black object-contain"
+        className="max-h-[80vh] w-auto max-w-full rounded-xl bg-black"
       />
     </div>
   );

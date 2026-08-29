@@ -2,13 +2,36 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, ImageOff, X } from "lucide-react";
-import { ui, useLanguage } from "@/lib/i18n";
-import { photos, type PhotoItem } from "@/content/photos";
+import { ChevronLeft, ChevronRight, ImageOff, Play, X } from "lucide-react";
+import { ui, useLanguage, type Bi } from "@/lib/i18n";
+import { photos } from "@/content/photos";
+import { courseMedia, type CourseMedia } from "@/content/course";
 import { Section, SectionHeading } from "./Section";
+import { VideoThumb } from "./VideoThumb";
+import { VideoPlayer } from "./VideoPlayer";
+
+type Tab = "professional" | "course";
+type Item = CourseMedia;
+
+const professionalItems: Item[] = photos.map((p) => ({
+  id: p.id,
+  kind: "photo",
+  src: p.src,
+  alt: p.alt,
+}));
+
+const courseItems: Item[] = courseMedia;
 
 /** Image with a graceful placeholder when the file is missing. */
-function PhotoImage({ photo, className }: { photo: PhotoItem; className?: string }) {
+function PhotoImage({
+  src,
+  alt,
+  className,
+}: {
+  src: string;
+  alt: Bi;
+  className?: string;
+}) {
   const { t } = useLanguage();
   const [failed, setFailed] = useState(false);
 
@@ -18,7 +41,7 @@ function PhotoImage({ photo, className }: { photo: PhotoItem; className?: string
         className={`flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-bg-soft to-bg text-fg-muted ${className ?? ""}`}
       >
         <ImageOff className="h-7 w-7" />
-        <span className="px-3 text-center text-xs">{t(photo.alt)}</span>
+        <span className="px-3 text-center text-xs">{t(alt)}</span>
       </div>
     );
   }
@@ -26,8 +49,8 @@ function PhotoImage({ photo, className }: { photo: PhotoItem; className?: string
   // eslint-disable-next-line @next/next/no-img-element
   return (
     <img
-      src={photo.src}
-      alt={t(photo.alt)}
+      src={src}
+      alt={t(alt)}
       loading="lazy"
       onError={() => setFailed(true)}
       className={className}
@@ -37,17 +60,34 @@ function PhotoImage({ photo, className }: { photo: PhotoItem; className?: string
 
 export function PhotoGallery() {
   const { t } = useLanguage();
+  const [tab, setTab] = useState<Tab>("professional");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [activeVideo, setActiveVideo] = useState<Item | null>(null);
 
-  const filtered = photos;
+  const items = tab === "professional" ? professionalItems : courseItems;
+  const photoItems = items.filter((it) => it.kind === "photo");
+
+  // Reset any open overlay when switching tabs.
+  useEffect(() => {
+    setLightboxIndex(null);
+    setActiveVideo(null);
+  }, [tab]);
+
+  const openItem = (it: Item) => {
+    if (it.kind === "video") {
+      setActiveVideo(it);
+    } else {
+      setLightboxIndex(photoItems.findIndex((p) => p.id === it.id));
+    }
+  };
 
   const close = () => setLightboxIndex(null);
   const prev = () =>
     setLightboxIndex((i) =>
-      i === null ? i : (i - 1 + filtered.length) % filtered.length,
+      i === null ? i : (i - 1 + photoItems.length) % photoItems.length,
     );
   const next = () =>
-    setLightboxIndex((i) => (i === null ? i : (i + 1) % filtered.length));
+    setLightboxIndex((i) => (i === null ? i : (i + 1) % photoItems.length));
 
   useEffect(() => {
     if (lightboxIndex === null) return;
@@ -59,37 +99,84 @@ export function PhotoGallery() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lightboxIndex, filtered.length]);
+  }, [lightboxIndex, photoItems.length]);
+
+  const tabs: { key: Tab; label: Bi }[] = [
+    { key: "professional", label: { he: "צילומים מקצועיים", en: "Professional Photos" } },
+    {
+      key: "course",
+      label: { he: "מהקורס — תמונות ווידאו", en: "From the Course — Photos & Video" },
+    },
+  ];
+
+  const lightboxPhoto = lightboxIndex === null ? null : photoItems[lightboxIndex];
 
   return (
     <Section id="photos">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           eyebrow={{ he: "גלריה", en: "Gallery" }}
-          title={ui.photos.title}
+          title={{ he: "תמונות ווידאו", en: "Photos & Video" }}
         />
+
+        {/* Tabs */}
+        <div className="mb-8 flex flex-wrap gap-3">
+          {tabs.map((tb) => (
+            <button
+              key={tb.key}
+              type="button"
+              onClick={() => setTab(tb.key)}
+              className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
+                tab === tb.key
+                  ? "border-accent bg-accent text-[#1a1306]"
+                  : "border-border text-fg-muted hover:border-accent hover:text-fg"
+              }`}
+            >
+              {t(tb.label)}
+            </button>
+          ))}
+        </div>
 
         {/* Masonry-ish grid */}
         <div className="columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
-          {filtered.map((photo, i) => (
+          {items.map((it) => (
             <button
-              key={photo.id}
+              key={it.id}
               type="button"
-              onClick={() => setLightboxIndex(i)}
-              className="group block w-full overflow-hidden rounded-xl border border-border bg-bg-card"
+              onClick={() => openItem(it)}
+              className="group relative block w-full overflow-hidden rounded-xl border border-border bg-bg-card"
             >
-              <PhotoImage
-                photo={photo}
-                className="aspect-[3/4] w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
+              {it.kind === "video" ? (
+                <>
+                  <VideoThumb
+                    src={it.src}
+                    title={t(it.title)}
+                    className="aspect-[3/4] w-full object-cover"
+                  />
+                  <span className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-full bg-accent/90 text-[#1a1306] shadow-lg transition-transform group-hover:scale-110">
+                      <Play className="h-5 w-5 translate-x-[1px]" fill="currentColor" />
+                    </span>
+                  </span>
+                  <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-3 text-start text-sm font-medium text-fg">
+                    {t(it.title)}
+                  </span>
+                </>
+              ) : (
+                <PhotoImage
+                  src={it.src}
+                  alt={it.alt}
+                  className="aspect-[3/4] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              )}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Lightbox */}
+      {/* Photo lightbox */}
       <AnimatePresence>
-        {lightboxIndex !== null ? (
+        {lightboxPhoto ? (
           <motion.div
             className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
             initial={{ opacity: 0 }}
@@ -119,14 +206,15 @@ export function PhotoGallery() {
             </button>
 
             <motion.div
-              key={filtered[lightboxIndex].id}
+              key={lightboxPhoto.id}
               className="max-h-[85vh] max-w-3xl"
               initial={{ scale: 0.97, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               onClick={(e) => e.stopPropagation()}
             >
               <PhotoImage
-                photo={filtered[lightboxIndex]}
+                src={lightboxPhoto.src}
+                alt={lightboxPhoto.alt}
                 className="max-h-[85vh] w-auto rounded-lg object-contain"
               />
             </motion.div>
@@ -142,6 +230,43 @@ export function PhotoGallery() {
             >
               <ChevronRight className="h-6 w-6 rtl:rotate-180" />
             </button>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+
+      {/* Video modal */}
+      <AnimatePresence>
+        {activeVideo && activeVideo.kind === "video" ? (
+          <motion.div
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActiveVideo(null)}
+          >
+            <motion.div
+              className="relative w-full max-w-4xl"
+              initial={{ scale: 0.96, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.96, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="mb-3 flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-fg">
+                  {t(activeVideo.title)}
+                </h3>
+                <button
+                  type="button"
+                  aria-label={t(ui.video.close)}
+                  onClick={() => setActiveVideo(null)}
+                  className="rounded-full border border-border p-2 text-fg-muted transition-colors hover:border-accent hover:text-fg"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+              <VideoPlayer src={activeVideo.src} title={t(activeVideo.title)} autoplay />
+            </motion.div>
           </motion.div>
         ) : null}
       </AnimatePresence>

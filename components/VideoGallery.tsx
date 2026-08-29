@@ -7,6 +7,7 @@ import { ui, useLanguage } from "@/lib/i18n";
 import { videos, type VideoItem } from "@/content/videos";
 import { Section, SectionHeading } from "./Section";
 import { VideoPlayer } from "./VideoPlayer";
+import { VideoThumb } from "./VideoThumb";
 
 function VideoCard({
   video,
@@ -23,19 +24,15 @@ function VideoCard({
       onClick={() => onPlay(video)}
       className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-bg-card text-start transition-colors hover:border-accent"
     >
-      {/* Poster area */}
+      {/* Live preview (plays muted while on screen) */}
       <div className="relative flex aspect-video items-center justify-center overflow-hidden bg-gradient-to-br from-bg-soft to-bg">
-        {video.poster ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={video.poster}
-            alt={t(video.title)}
-            loading="lazy"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        ) : null}
-        <div className="absolute inset-0 opacity-40 [background:radial-gradient(120%_120%_at_50%_0%,rgba(216,166,87,0.18),transparent_60%)]" />
-        <span className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-[#1a1306] transition-transform group-hover:scale-110">
+        <VideoThumb
+          src={video.src}
+          title={t(video.title)}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/25 transition-colors group-hover:bg-black/10" />
+        <span className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full bg-accent/90 text-[#1a1306] shadow-lg transition-transform group-hover:scale-110">
           <Play className="h-6 w-6 translate-x-[1px]" fill="currentColor" />
         </span>
       </div>
