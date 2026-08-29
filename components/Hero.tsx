@@ -12,7 +12,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 pt-24 pb-16"
+      className="relative isolate flex min-h-screen items-center justify-center overflow-hidden px-6 pt-24 pb-16"
     >
       {/* Background photo slideshow */}
       <HeroSlideshow />
@@ -20,11 +20,11 @@ export function Hero() {
       {/* Legibility scrim: dark gradient + soft vignette + accent glow */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-gradient-to-b from-bg/85 via-bg/60 to-bg"
+        className="absolute inset-0 z-0 bg-gradient-to-b from-bg/85 via-bg/60 to-bg"
       />
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 [background:radial-gradient(120%_90%_at_50%_50%,transparent_0%,rgba(11,11,14,0.55)_100%),radial-gradient(60%_50%_at_50%_0%,rgba(216,166,87,0.14)_0%,rgba(216,166,87,0)_70%)]"
+        className="absolute inset-0 z-0 [background:radial-gradient(120%_90%_at_50%_50%,transparent_0%,rgba(11,11,14,0.55)_100%),radial-gradient(60%_50%_at_50%_0%,rgba(216,166,87,0.14)_0%,rgba(216,166,87,0)_70%)]"
       />
 
       <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center [text-shadow:0_2px_18px_rgba(0,0,0,0.55)]">

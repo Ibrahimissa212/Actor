@@ -30,7 +30,7 @@ export function HeroSlideshow() {
 
   if (reduceMotion) {
     return (
-      <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden">
+      <div aria-hidden className="absolute inset-0 z-0 overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={SLIDES[0]}
@@ -45,7 +45,7 @@ export function HeroSlideshow() {
   const panX = index % 2 === 0 ? [-1.5, 1.5] : [1.5, -1.5];
 
   return (
-    <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden bg-bg">
+    <div aria-hidden className="absolute inset-0 z-0 overflow-hidden bg-bg">
       <AnimatePresence>
         <motion.div
           key={index}
