@@ -34,6 +34,23 @@ export function About() {
             ))}
           </ul>
         </div>
+
+        {/* Languages & accents — key casting info */}
+        <div className="mt-12">
+          <h3 className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-accent">
+            {t(about.languagesHeading)}
+          </h3>
+          <ul className="flex flex-wrap gap-3">
+            {about.languages.map((lang, i) => (
+              <li
+                key={i}
+                className="rounded-full border border-accent/40 bg-accent/10 px-4 py-2 text-sm font-medium text-fg"
+              >
+                {t(lang)}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </Section>
   );

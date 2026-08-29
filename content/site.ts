@@ -54,6 +54,25 @@ export const about = {
     { he: "צילום לפרסומות", en: "Commercial shoots", ar: "تصوير إعلانات" },
     { he: "הכנת אודישנים", en: "Audition prep", ar: "تحضير لتجارب الأداء" },
   ] satisfies Bi[],
+
+  languagesHeading: {
+    he: "שפות ומבטאים",
+    en: "Languages & Accents",
+    ar: "اللغات واللهجات",
+  } satisfies Bi,
+
+  // Casting-relevant languages and accents.
+  languages: [
+    { he: "ערבית — שפת אם", en: "Arabic — native", ar: "العربية — لغة الأم" },
+    { he: "עברית — שפת אם", en: "Hebrew — native", ar: "العبرية — لغة الأم" },
+    { he: "אנגלית — שליטה טובה", en: "English — proficient", ar: "الإنجليزية — إتقان جيّد" },
+    {
+      he: "עברית במבטא צרפתי",
+      en: "Hebrew with a French accent",
+      ar: "العبرية بلكنة فرنسية",
+    },
+    { he: "צרפתית — רמה בסיסית", en: "French — basic", ar: "الفرنسية — مستوى أساسي" },
+  ] satisfies Bi[],
 };
 
 export const showreel = {
