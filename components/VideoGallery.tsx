@@ -77,6 +77,7 @@ export function VideoGallery() {
   const { t } = useLanguage();
   const [active, setActive] = useState<VideoItem | null>(null);
 
+  const commercial = videos.filter((v) => v.category === "commercial");
   const professional = videos.filter((v) => v.category === "professional");
   const course = videos.filter((v) => v.category === "course");
 
@@ -88,6 +89,11 @@ export function VideoGallery() {
           title={{ he: "וידאו", en: "Video", ar: "فيديو" }}
         />
 
+        <CategoryBlock
+          titleKey={ui.video.commercial}
+          items={commercial}
+          onPlay={setActive}
+        />
         <CategoryBlock
           titleKey={ui.video.professional}
           items={professional}

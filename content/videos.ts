@@ -1,6 +1,6 @@
 import type { Bi } from "@/lib/i18n";
 
-export type VideoCategory = "professional" | "course";
+export type VideoCategory = "commercial" | "professional" | "course";
 
 export type VideoItem = {
   id: string;
@@ -23,6 +23,21 @@ export type VideoItem = {
  *   - "course": montage clips from the acting course (stage & camera)
  */
 export const videos: VideoItem[] = [
+  {
+    id: "bigbrother-promo-2020",
+    category: "commercial",
+    title: {
+      he: "פרומו לאח הגדול 2021",
+      en: "Big Brother Israel — 2021 Promo",
+      ar: "برومو الأخ الأكبر 2021",
+    },
+    description: {
+      he: "פרומו ששודר לקראת עונת האח הגדול 2021 (צולם ב־2020) — אני מופיע בו.",
+      en: "An aired promo for the Big Brother Israel 2021 season (shot in 2020) — I appear in it.",
+      ar: "برومو بُثّ لموسم الأخ الأكبر 2021 (صُوّر عام 2020) — أظهر فيه.",
+    },
+    src: "/videos/bigbrother-promo-2020.mp4",
+  },
   {
     id: "studio-shoot",
     category: "professional",

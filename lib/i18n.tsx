@@ -37,6 +37,11 @@ export const ui = {
     scroll: { he: "גלול למטה", en: "Scroll down", ar: "مرّر للأسفل" },
   },
   video: {
+    commercial: {
+      he: "פרסומות ומסך",
+      en: "Commercials & Screen",
+      ar: "إعلانات وشاشة",
+    },
     professional: {
       he: "צילומים מקצועיים",
       en: "Professional Shoot",
