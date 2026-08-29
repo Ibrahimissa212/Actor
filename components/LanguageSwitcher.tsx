@@ -1,22 +1,47 @@
 "use client";
 
-import { Languages } from "lucide-react";
-import { useLanguage } from "@/lib/i18n";
+import { LANGS, useLanguage, type Lang } from "@/lib/i18n";
+
+const SHORT: Record<Lang, string> = {
+  he: "עב",
+  en: "EN",
+  ar: "ع",
+};
+
+const FULL: Record<Lang, string> = {
+  he: "עברית",
+  en: "English",
+  ar: "العربية",
+};
 
 export function LanguageSwitcher() {
-  const { lang, toggle } = useLanguage();
-  // Show the language you can switch TO.
-  const target = lang === "he" ? "English" : "עברית";
+  const { lang, setLang } = useLanguage();
 
   return (
-    <button
-      type="button"
-      onClick={toggle}
-      aria-label="Switch language"
-      className="inline-flex items-center gap-2 rounded-full border border-border bg-bg-card/60 px-3 py-1.5 text-sm font-medium text-fg-muted transition-colors hover:border-accent hover:text-fg"
+    <div
+      role="group"
+      aria-label="Language"
+      className="inline-flex items-center gap-0.5 rounded-full border border-border bg-bg-card/60 p-0.5"
     >
-      <Languages className="h-4 w-4" aria-hidden />
-      <span>{target}</span>
-    </button>
+      {LANGS.map((l) => {
+        const active = l === lang;
+        return (
+          <button
+            key={l}
+            type="button"
+            onClick={() => setLang(l)}
+            aria-label={FULL[l]}
+            aria-pressed={active}
+            className={`min-w-8 rounded-full px-2.5 py-1 text-sm font-semibold transition-colors ${
+              active
+                ? "bg-accent text-[#1a1306]"
+                : "text-fg-muted hover:text-fg"
+            }`}
+          >
+            {SHORT[l]}
+          </button>
+        );
+      })}
+    </div>
   );
 }

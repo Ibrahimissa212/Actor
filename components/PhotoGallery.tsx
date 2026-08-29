@@ -102,10 +102,17 @@ export function PhotoGallery() {
   }, [lightboxIndex, photoItems.length]);
 
   const tabs: { key: Tab; label: Bi }[] = [
-    { key: "professional", label: { he: "צילומים מקצועיים", en: "Professional Photos" } },
+    {
+      key: "professional",
+      label: { he: "צילומים מקצועיים", en: "Professional Photos", ar: "صور احترافية" },
+    },
     {
       key: "course",
-      label: { he: "מהקורס — תמונות ווידאו", en: "From the Course — Photos & Video" },
+      label: {
+        he: "מהקורס — תמונות ווידאו",
+        en: "From the Course — Photos & Video",
+        ar: "من الدورة — صور وفيديو",
+      },
     },
   ];
 
@@ -115,8 +122,8 @@ export function PhotoGallery() {
     <Section id="photos">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
-          eyebrow={{ he: "גלריה", en: "Gallery" }}
-          title={{ he: "תמונות ווידאו", en: "Photos & Video" }}
+          eyebrow={{ he: "גלריה", en: "Gallery", ar: "معرض" }}
+          title={{ he: "תמונות ווידאו", en: "Photos & Video", ar: "صور وفيديو" }}
         />
 
         {/* Tabs */}

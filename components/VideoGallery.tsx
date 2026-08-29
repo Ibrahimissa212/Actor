@@ -84,8 +84,8 @@ export function VideoGallery() {
     <Section id="video">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
-          eyebrow={{ he: "תיק עבודות", en: "Portfolio" }}
-          title={{ he: "וידאו", en: "Video" }}
+          eyebrow={{ he: "תיק עבודות", en: "Portfolio", ar: "أعمالي" }}
+          title={{ he: "וידאו", en: "Video", ar: "فيديو" }}
         />
 
         <CategoryBlock

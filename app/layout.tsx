@@ -5,7 +5,7 @@ import { LanguageProvider } from "@/lib/i18n";
 
 const rubik = Rubik({
   variable: "--font-rubik",
-  subsets: ["latin", "hebrew"],
+  subsets: ["latin", "hebrew", "arabic"],
   display: "swap",
 });
 
@@ -13,17 +13,26 @@ export const metadata: Metadata = {
   // TODO: once deployed, set this to your live URL (e.g. https://<project>.pages.dev).
   metadataBase: new URL("https://your-name.pages.dev"),
   title: {
-    default: "Actor Portfolio",
-    template: "%s · Actor Portfolio",
+    default: "Ibrahim Issa — Actor",
+    template: "%s · Ibrahim Issa",
   },
   description:
-    "Acting portfolio — stage and on-camera work, headshots, and showreel.",
-  keywords: ["actor", "acting", "showreel", "portfolio", "שחקן", "תיק עבודות"],
+    "Ibrahim Issa — actor and Technion-graduate software engineer. Stage and on-camera work, professional photos, and course reels.",
+  keywords: [
+    "Ibrahim Issa",
+    "actor",
+    "acting",
+    "portfolio",
+    "שחקן",
+    "איברהים עיסא",
+    "تمثيل",
+    "إبراهيم عيسى",
+  ],
   openGraph: {
     type: "website",
-    title: "Actor Portfolio",
+    title: "Ibrahim Issa — Actor",
     description:
-      "Acting portfolio — stage and on-camera work, headshots, and showreel.",
+      "Actor and Technion-graduate software engineer — stage and on-camera work, professional photos, and course reels.",
   },
   robots: { index: true, follow: true },
 };

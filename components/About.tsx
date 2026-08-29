@@ -11,7 +11,7 @@ export function About() {
     <Section id="about" className="bg-bg-soft">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
-          eyebrow={{ he: "אודות", en: "About" }}
+          eyebrow={{ he: "אודות", en: "About", ar: "عن" }}
           title={about.heading}
         />
 

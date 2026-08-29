@@ -9,49 +9,57 @@ import {
   useState,
 } from "react";
 
-export type Lang = "he" | "en";
+export type Lang = "he" | "en" | "ar";
 
-export const LANGS: Lang[] = ["he", "en"];
+export const LANGS: Lang[] = ["he", "en", "ar"];
 export const DEFAULT_LANG: Lang = "he";
 
 export function dirFor(lang: Lang): "rtl" | "ltr" {
-  return lang === "he" ? "rtl" : "ltr";
+  return lang === "en" ? "ltr" : "rtl";
 }
 
-/** Bilingual string helper: pick the value for the active language. */
-export type Bi = Record<Lang, string>;
+/**
+ * Multilingual string helper. `he` and `en` are required; `ar` is optional
+ * and falls back to Hebrew (both are RTL) when not provided.
+ */
+export type Bi = { he: string; en: string; ar?: string };
 
 /** UI chrome strings (navigation, buttons, labels). */
 export const ui = {
   nav: {
-    about: { he: "אודות", en: "About" },
-    showreel: { he: "סרטון תקציר", en: "Showreel" },
-    video: { he: "וידאו", en: "Video" },
-    photos: { he: "תמונות", en: "Photos" },
-    contact: { he: "צור קשר", en: "Contact" },
+    about: { he: "אודות", en: "About", ar: "عن" },
+    showreel: { he: "סרטון תקציר", en: "Showreel", ar: "ملخص" },
+    video: { he: "וידאו", en: "Video", ar: "فيديو" },
+    photos: { he: "תמונות", en: "Photos", ar: "صور" },
+    contact: { he: "צור קשר", en: "Contact", ar: "تواصل" },
   },
   hero: {
-    scroll: { he: "גלול למטה", en: "Scroll down" },
+    scroll: { he: "גלול למטה", en: "Scroll down", ar: "مرّر للأسفل" },
   },
   video: {
-    professional: { he: "צילומים מקצועיים", en: "Professional Shoot" },
+    professional: {
+      he: "צילומים מקצועיים",
+      en: "Professional Shoot",
+      ar: "تصوير احترافي",
+    },
     course: {
       he: "קטעים מהקורס — במה ומצלמה",
       en: "From the Course — Stage & Camera",
+      ar: "من الدورة — مسرح وكاميرا",
     },
-    play: { he: "נגן", en: "Play" },
-    close: { he: "סגור", en: "Close" },
+    play: { he: "נגן", en: "Play", ar: "تشغيل" },
+    close: { he: "סגור", en: "Close", ar: "إغلاق" },
   },
   photos: {
-    title: { he: "צילומים מקצועיים", en: "Professional Photos" },
+    title: { he: "צילומים מקצועיים", en: "Professional Photos", ar: "صور احترافية" },
   },
   contact: {
-    title: { he: "בואו נדבר", en: "Let's talk" },
-    cv: { he: "הורדת קורות חיים", en: "Download CV" },
-    email: { he: "אימייל", en: "Email" },
-    phone: { he: "טלפון", en: "Phone" },
+    title: { he: "בואו נדבר", en: "Let's talk", ar: "لنتحدّث" },
+    cv: { he: "הורדת קורות חיים", en: "Download CV", ar: "تحميل السيرة الذاتية" },
+    email: { he: "אימייל", en: "Email", ar: "البريد الإلكتروني" },
+    phone: { he: "טלפון", en: "Phone", ar: "هاتف" },
   },
-  langName: { he: "עברית", en: "English" },
+  langName: { he: "עברית", en: "English", ar: "العربية" },
 } as const;
 
 type LanguageContextValue = {
@@ -73,7 +81,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   // Restore persisted choice on mount.
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored === "he" || stored === "en") {
+    if (stored === "he" || stored === "en" || stored === "ar") {
       setLangState(stored);
     }
   }, []);
@@ -88,7 +96,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   const setLang = useCallback((next: Lang) => setLangState(next), []);
   const toggle = useCallback(
-    () => setLangState((prev) => (prev === "he" ? "en" : "he")),
+    () =>
+      setLangState((prev) => {
+        const idx = LANGS.indexOf(prev);
+        return LANGS[(idx + 1) % LANGS.length];
+      }),
     [],
   );
 
@@ -98,7 +110,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       dir: dirFor(lang),
       setLang,
       toggle,
-      t: (v: Bi) => v[lang],
+      // Arabic falls back to Hebrew when a string hasn't been translated.
+      t: (v: Bi) => v[lang] ?? v.he,
     }),
     [lang, setLang, toggle],
   );
