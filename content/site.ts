@@ -63,7 +63,11 @@ export const about = {
 
   // Casting-relevant languages and accents.
   languages: [
-    { he: "ערבית — שפת אם", en: "Arabic — native", ar: "العربية — لغة الأم" },
+    {
+      he: "ערבית — שפת אם (מבטאים: לבנוני, פלסטיני, סורי, מצרי)",
+      en: "Arabic — native (accents: Lebanese, Palestinian, Syrian, Egyptian)",
+      ar: "العربية — لغة الأم (لهجات: لبنانية، فلسطينية، سورية، مصرية)",
+    },
     { he: "עברית — שפת אם", en: "Hebrew — native", ar: "العبرية — لغة الأم" },
     { he: "אנגלית — שליטה טובה", en: "English — proficient", ar: "الإنجليزية — إتقان جيّد" },
     {
