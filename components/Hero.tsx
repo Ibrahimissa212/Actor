@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { ui, useLanguage } from "@/lib/i18n";
 import { profile } from "@/content/site";
+import { HeroSlideshow } from "./HeroSlideshow";
 
 export function Hero() {
   const { t } = useLanguage();
@@ -11,9 +12,22 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="spotlight relative flex min-h-screen items-center justify-center overflow-hidden px-6 pt-24 pb-16"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 pt-24 pb-16"
     >
-      <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
+      {/* Background photo slideshow */}
+      <HeroSlideshow />
+
+      {/* Legibility scrim: dark gradient + soft vignette + accent glow */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-gradient-to-b from-bg/85 via-bg/60 to-bg"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 [background:radial-gradient(120%_90%_at_50%_50%,transparent_0%,rgba(11,11,14,0.55)_100%),radial-gradient(60%_50%_at_50%_0%,rgba(216,166,87,0.14)_0%,rgba(216,166,87,0)_70%)]"
+      />
+
+      <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center [text-shadow:0_2px_18px_rgba(0,0,0,0.55)]">
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
