@@ -54,19 +54,34 @@ export const videos: VideoItem[] = [
     src: "/videos/studio.mp4",
   },
   {
-    id: "course-reel-1",
+    id: "character-cerebral-palsy",
     category: "course",
     title: {
-      he: "מבחר קטעים — במה ומצלמה (1)",
-      en: "Selected Clips — Stage & Camera (1)",
-      ar: "مقاطع مختارة — مسرح وكاميرا (1)",
+      he: "דמות קיצון — בחור עם שיתוק מוחין שחי את החיים",
+      en: "Bold Character — A Guy with Cerebral Palsy Living Life to the Fullest",
+      ar: "شخصية جريئة — شاب مصاب بالشلل الدماغي يعيش الحياة بأكملها",
     },
     description: {
-      he: "אוסף רגעים מתוך עבודות הבמה והמצלמה שצולמו במהלך הקורס.",
-      en: "A montage of moments from my stage and on-camera work during the course.",
-      ar: "مجموعة لحظات من أعمالي المسرحية وأمام الكاميرا خلال الدورة.",
+      he: "מונולוג בדמות אדם עם שיתוק מוחין שאוהב את החיים — עבודת גוף וקול מאתגרת.",
+      en: "A monologue as a person with cerebral palsy who loves life — demanding physical and vocal work.",
+      ar: "مونولوج بشخصية شخص مصاب بالشلل الدماغي يحبّ الحياة — عمل جسدي وصوتي متطلّب.",
     },
-    src: "/videos/course-1.mp4",
+    src: "/videos/course/life-motto.mp4",
+  },
+  {
+    id: "character-bar",
+    category: "course",
+    title: {
+      he: "דמות קיצון — הקאתי בבר",
+      en: "Bold Character — Threw Up at the Bar",
+      ar: "شخصية جريئة — تقيّأتُ في الحانة",
+    },
+    description: {
+      he: "קטע קומי בדמות קיצון — \u201eהקאתי בבר\u201d.",
+      en: "A comedic bold-character scene — \u201cThrew Up at the Bar\u201d.",
+      ar: "مشهد كوميدي بشخصية جريئة — «تقيّأتُ في الحانة».",
+    },
+    src: "/videos/course/bar-scene.mp4",
   },
   {
     id: "course-reel-2",

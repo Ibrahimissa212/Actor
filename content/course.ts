@@ -11,20 +11,6 @@ export type CourseMedia =
 
 const courseVideos: CourseMedia[] = [
   {
-    id: "cv-life-motto",
-    kind: "video",
-    src: "/videos/course/life-motto.mp4",
-    title: { he: "המוטו לחיים", en: "Life Motto", ar: "شعار الحياة" },
-    alt: { he: "קטע וידאו מהקורס — המוטו לחיים", en: "Course video — Life Motto" },
-  },
-  {
-    id: "cv-bar",
-    kind: "video",
-    src: "/videos/course/bar-scene.mp4",
-    title: { he: "הקאתי בבר", en: "Threw Up at the Bar", ar: "تقيّأتُ في الحانة" },
-    alt: { he: "קטע וידאו קומי מהקורס", en: "Comedic course scene" },
-  },
-  {
     id: "cv-halil",
     kind: "video",
     src: "/videos/course/halil.mp4",

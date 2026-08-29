@@ -94,12 +94,12 @@ export function VideoGallery() {
           items={commercial}
           onPlay={setActive}
         />
+        <CategoryBlock titleKey={ui.video.course} items={course} onPlay={setActive} />
         <CategoryBlock
           titleKey={ui.video.professional}
           items={professional}
           onPlay={setActive}
         />
-        <CategoryBlock titleKey={ui.video.course} items={course} onPlay={setActive} />
       </div>
 
       {/* Player modal */}
