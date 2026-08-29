@@ -34,15 +34,16 @@ export const ui = {
     scroll: { he: "גלול למטה", en: "Scroll down" },
   },
   video: {
-    stage: { he: "על הבמה — תיאטרון", en: "On Stage — Theatre" },
-    camera: { he: "משחק מול מצלמה", en: "On Camera" },
+    professional: { he: "צילומים מקצועיים", en: "Professional Shoot" },
+    course: {
+      he: "קטעים מהקורס — במה ומצלמה",
+      en: "From the Course — Stage & Camera",
+    },
     play: { he: "נגן", en: "Play" },
     close: { he: "סגור", en: "Close" },
   },
   photos: {
-    title: { he: "גלריית תמונות", en: "Photo Gallery" },
-    headshots: { he: "צילומים מקצועיים", en: "Headshots" },
-    classes: { he: "מהשיעורים והבמה", en: "Classes & Stage" },
+    title: { he: "צילומים מקצועיים", en: "Professional Photos" },
   },
   contact: {
     title: { he: "בואו נדבר", en: "Let's talk" },

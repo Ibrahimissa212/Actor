@@ -6,7 +6,7 @@ import { Play, X } from "lucide-react";
 import { ui, useLanguage } from "@/lib/i18n";
 import { videos, type VideoItem } from "@/content/videos";
 import { Section, SectionHeading } from "./Section";
-import { VimeoPlayer } from "./VimeoPlayer";
+import { VideoPlayer } from "./VideoPlayer";
 
 function VideoCard({
   video,
@@ -16,32 +16,28 @@ function VideoCard({
   onPlay: (v: VideoItem) => void;
 }) {
   const { t } = useLanguage();
-  const available = Boolean(video.vimeoId);
 
   return (
     <button
       type="button"
-      disabled={!available}
-      onClick={() => available && onPlay(video)}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-bg-card text-start transition-colors enabled:hover:border-accent disabled:cursor-default"
+      onClick={() => onPlay(video)}
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-bg-card text-start transition-colors hover:border-accent"
     >
       {/* Poster area */}
       <div className="relative flex aspect-video items-center justify-center overflow-hidden bg-gradient-to-br from-bg-soft to-bg">
+        {video.poster ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={video.poster}
+            alt={t(video.title)}
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        ) : null}
         <div className="absolute inset-0 opacity-40 [background:radial-gradient(120%_120%_at_50%_0%,rgba(216,166,87,0.18),transparent_60%)]" />
-        <span
-          className={`relative z-10 flex h-14 w-14 items-center justify-center rounded-full transition-transform ${
-            available
-              ? "bg-accent text-[#1a1306] group-hover:scale-110"
-              : "bg-bg-card text-fg-muted"
-          }`}
-        >
+        <span className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-[#1a1306] transition-transform group-hover:scale-110">
           <Play className="h-6 w-6 translate-x-[1px]" fill="currentColor" />
         </span>
-        {!available ? (
-          <span className="absolute bottom-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-bg/80 px-3 py-1 text-xs font-medium text-fg-muted">
-            {t({ he: "בקרוב", en: "Coming soon" })}
-          </span>
-        ) : null}
       </div>
 
       <div className="flex flex-1 flex-col gap-2 p-5">
@@ -84,8 +80,8 @@ export function VideoGallery() {
   const { t } = useLanguage();
   const [active, setActive] = useState<VideoItem | null>(null);
 
-  const stage = videos.filter((v) => v.category === "stage");
-  const camera = videos.filter((v) => v.category === "camera");
+  const professional = videos.filter((v) => v.category === "professional");
+  const course = videos.filter((v) => v.category === "course");
 
   return (
     <Section id="video">
@@ -95,8 +91,12 @@ export function VideoGallery() {
           title={{ he: "וידאו", en: "Video" }}
         />
 
-        <CategoryBlock titleKey={ui.video.stage} items={stage} onPlay={setActive} />
-        <CategoryBlock titleKey={ui.video.camera} items={camera} onPlay={setActive} />
+        <CategoryBlock
+          titleKey={ui.video.professional}
+          items={professional}
+          onPlay={setActive}
+        />
+        <CategoryBlock titleKey={ui.video.course} items={course} onPlay={setActive} />
       </div>
 
       {/* Player modal */}
@@ -130,9 +130,9 @@ export function VideoGallery() {
                   <X className="h-5 w-5" />
                 </button>
               </div>
-              <VimeoPlayer
-                vimeoId={active.vimeoId}
-                vimeoHash={active.vimeoHash}
+              <VideoPlayer
+                src={active.src}
+                poster={active.poster}
                 title={t(active.title)}
                 autoplay
               />

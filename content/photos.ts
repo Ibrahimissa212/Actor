@@ -1,58 +1,66 @@
 import type { Bi } from "@/lib/i18n";
 
-export type PhotoCategory = "headshots" | "classes";
+export type PhotoCategory = "professional";
 
 export type PhotoItem = {
   id: string;
   category: PhotoCategory;
-  /** Path under /public, e.g. "/images/headshot-1.jpg". */
+  /** Path under /public, e.g. "/images/headshot-01.jpg". */
   src: string;
   alt: Bi;
 };
 
 /**
- * Add a photo by:
- *   1. Dropping the (compressed!) image into /public/images
- *   2. Adding an entry here pointing to it.
- *
- * Tip: keep images under ~300KB. Resize to ~1600px on the long edge.
- * The entries below point to placeholder files — replace them with yours.
+ * Professional studio photos (a couple per look).
+ * To add more: drop a compressed image into /public/images and add an entry.
  */
 export const photos: PhotoItem[] = [
   {
-    id: "headshot-1",
-    category: "headshots",
-    src: "/images/headshot-1.jpg",
-    alt: { he: "צילום מקצועי 1", en: "Professional headshot 1" },
+    id: "headshot-01",
+    category: "professional",
+    src: "/images/headshot-01.jpg",
+    alt: { he: "צילום סטודיו מקצועי — מבט רציני", en: "Professional studio portrait — intense look" },
   },
   {
-    id: "headshot-2",
-    category: "headshots",
-    src: "/images/headshot-2.jpg",
-    alt: { he: "צילום מקצועי 2", en: "Professional headshot 2" },
+    id: "headshot-02",
+    category: "professional",
+    src: "/images/headshot-02.jpg",
+    alt: { he: "צילום סטודיו מקצועי — חיוך", en: "Professional studio portrait — smiling" },
   },
   {
-    id: "headshot-3",
-    category: "headshots",
-    src: "/images/headshot-3.jpg",
-    alt: { he: "צילום מקצועי 3", en: "Professional headshot 3" },
+    id: "headshot-03",
+    category: "professional",
+    src: "/images/headshot-03.jpg",
+    alt: { he: "צילום סטודיו מקצועי — חולצה לבנה", en: "Professional studio portrait — white tee" },
   },
   {
-    id: "class-1",
-    category: "classes",
-    src: "/images/class-1.jpg",
-    alt: { he: "מהשיעורים — על הבמה 1", en: "From the classes — on stage 1" },
+    id: "headshot-04",
+    category: "professional",
+    src: "/images/headshot-04.jpg",
+    alt: { he: "צילום סטודיו מקצועי — מבט הצידה", en: "Professional studio portrait — looking away" },
   },
   {
-    id: "class-2",
-    category: "classes",
-    src: "/images/class-2.jpg",
-    alt: { he: "מהשיעורים — על הבמה 2", en: "From the classes — on stage 2" },
+    id: "headshot-05",
+    category: "professional",
+    src: "/images/headshot-05.jpg",
+    alt: { he: "צילום סטודיו מקצועי — חולצה שחורה", en: "Professional studio portrait — black tee" },
   },
   {
-    id: "class-3",
-    category: "classes",
-    src: "/images/class-3.jpg",
-    alt: { he: "מהשיעורים — דמות קיצון", en: "From the classes — character role" },
+    id: "headshot-06",
+    category: "professional",
+    src: "/images/headshot-06.jpg",
+    alt: { he: "צילום סטודיו מקצועי — פוזה יושבת", en: "Professional studio portrait — seated pose" },
+  },
+  {
+    id: "headshot-07",
+    category: "professional",
+    src: "/images/headshot-07.jpg",
+    alt: { he: "צילום סטודיו מקצועי — טונים בהירים", en: "Professional studio portrait — light tones" },
+  },
+  {
+    id: "headshot-08",
+    category: "professional",
+    src: "/images/headshot-08.jpg",
+    alt: { he: "צילום סטודיו מקצועי — מבט רגוע", en: "Professional studio portrait — calm expression" },
   },
 ];

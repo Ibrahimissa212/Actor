@@ -81,6 +81,7 @@ export const contact = {
     { label: "Facebook", url: "https://www.facebook.com/ibrahim.issa.796" },
   ],
 
-  // CV file lives in /public/cv/cv.pdf — replace that file with your own.
-  cvPath: "/cv/cv.pdf",
+  // CV file lives in /public/cv/cv.pdf. Leave "" to hide the download
+  // button until a CV is added.
+  cvPath: "",
 };

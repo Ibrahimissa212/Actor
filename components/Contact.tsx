@@ -34,16 +34,18 @@ export function Contact() {
           </a>
         </div>
 
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-          <a
-            href={contact.cvPath}
-            download
-            className="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3 text-sm font-semibold text-[#1a1306] transition-transform hover:scale-[1.03]"
-          >
-            <Download className="h-4 w-4" />
-            {t(ui.contact.cv)}
-          </a>
-        </div>
+        {contact.cvPath ? (
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <a
+              href={contact.cvPath}
+              download
+              className="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3 text-sm font-semibold text-[#1a1306] transition-transform hover:scale-[1.03]"
+            >
+              <Download className="h-4 w-4" />
+              {t(ui.contact.cv)}
+            </a>
+          </div>
+        ) : null}
 
         {socials.length > 0 ? (
           <div className="mt-8 flex flex-wrap items-center justify-center gap-6">

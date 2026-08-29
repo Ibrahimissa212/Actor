@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, ImageOff, X } from "lucide-react";
 import { ui, useLanguage } from "@/lib/i18n";
-import { photos, type PhotoCategory, type PhotoItem } from "@/content/photos";
+import { photos, type PhotoItem } from "@/content/photos";
 import { Section, SectionHeading } from "./Section";
 
 /** Image with a graceful placeholder when the file is missing. */
@@ -35,21 +35,11 @@ function PhotoImage({ photo, className }: { photo: PhotoItem; className?: string
   );
 }
 
-type Filter = "all" | PhotoCategory;
-
 export function PhotoGallery() {
   const { t } = useLanguage();
-  const [filter, setFilter] = useState<Filter>("all");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const filtered =
-    filter === "all" ? photos : photos.filter((p) => p.category === filter);
-
-  const filters: { key: Filter; label: { he: string; en: string } }[] = [
-    { key: "all", label: { he: "הכל", en: "All" } },
-    { key: "headshots", label: ui.photos.headshots },
-    { key: "classes", label: ui.photos.classes },
-  ];
+  const filtered = photos;
 
   const close = () => setLightboxIndex(null);
   const prev = () =>
@@ -78,24 +68,6 @@ export function PhotoGallery() {
           eyebrow={{ he: "גלריה", en: "Gallery" }}
           title={ui.photos.title}
         />
-
-        {/* Filters */}
-        <div className="mb-8 flex flex-wrap gap-3">
-          {filters.map((f) => (
-            <button
-              key={f.key}
-              type="button"
-              onClick={() => setFilter(f.key)}
-              className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
-                filter === f.key
-                  ? "border-accent bg-accent text-[#1a1306]"
-                  : "border-border text-fg-muted hover:border-accent hover:text-fg"
-              }`}
-            >
-              {t(f.label)}
-            </button>
-          ))}
-        </div>
 
         {/* Masonry-ish grid */}
         <div className="columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
