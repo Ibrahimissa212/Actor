@@ -1,26 +1,19 @@
 "use client";
 
+import { track } from "@/lib/tracking";
+import { useContent } from "@/lib/content";
+
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, ImageOff, Play, X } from "lucide-react";
-import { ui, useLanguage, type Bi } from "@/lib/i18n";
-import { photos } from "@/content/photos";
-import { courseMedia, type CourseMedia } from "@/content/course";
+import { useLanguage, type Bi } from "@/lib/i18n";
+import { type CourseMedia } from "@/content/course";
 import { Section, SectionHeading } from "./Section";
 import { VideoThumb } from "./VideoThumb";
 import { VideoPlayer } from "./VideoPlayer";
 
 type Tab = "professional" | "course";
 type Item = CourseMedia;
-
-const professionalItems: Item[] = photos.map((p) => ({
-  id: p.id,
-  kind: "photo",
-  src: p.src,
-  alt: p.alt,
-}));
-
-const courseItems: Item[] = courseMedia;
 
 /** Image with a graceful placeholder when the file is missing. */
 function PhotoImage({
@@ -46,8 +39,8 @@ function PhotoImage({
     );
   }
 
-  // eslint-disable-next-line @next/next/no-img-element
   return (
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={src}
       alt={t(alt)}
@@ -59,6 +52,9 @@ function PhotoImage({
 }
 
 export function PhotoGallery() {
+  const { photos, courseMedia, ui, labels } = useContent();
+  const professionalItems: Item[] = photos.filter(p => !p.hidden).map(p => ({...p, kind:'photo'}));
+  const courseItems = courseMedia.filter(p => !p.hidden);
   const { t } = useLanguage();
   const [tab, setTab] = useState<Tab>("professional");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -66,12 +62,6 @@ export function PhotoGallery() {
 
   const items = tab === "professional" ? professionalItems : courseItems;
   const photoItems = items.filter((it) => it.kind === "photo");
-
-  // Reset any open overlay when switching tabs.
-  useEffect(() => {
-    setLightboxIndex(null);
-    setActiveVideo(null);
-  }, [tab]);
 
   const openItem = (it: Item) => {
     if (it.kind === "video") {
@@ -104,26 +94,24 @@ export function PhotoGallery() {
   const tabs: { key: Tab; label: Bi }[] = [
     {
       key: "professional",
-      label: { he: "צילומים מקצועיים", en: "Professional Photos", ar: "صور احترافية" },
+      label: ui.photos.title,
     },
     {
       key: "course",
-      label: {
-        he: "מהקורס — תמונות ווידאו",
-        en: "From the Course — Photos & Video",
-        ar: "من الدورة — صور وفيديو",
-      },
+      label: labels.courseTab,
     },
   ];
 
   const lightboxPhoto = lightboxIndex === null ? null : photoItems[lightboxIndex];
+  const openedPhoto = lightboxPhoto?.id;
+  useEffect(() => { if (openedPhoto) void track('photo_open', openedPhoto); }, [openedPhoto]);
 
   return (
     <Section id="photos">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
-          eyebrow={{ he: "גלריה", en: "Gallery", ar: "معرض" }}
-          title={{ he: "תמונות ווידאו", en: "Photos & Video", ar: "صور وفيديو" }}
+          eyebrow={labels.galleryEyebrow}
+          title={labels.galleryTitle}
         />
 
         {/* Tabs */}
@@ -132,7 +120,7 @@ export function PhotoGallery() {
             <button
               key={tb.key}
               type="button"
-              onClick={() => setTab(tb.key)}
+              onClick={() => {setTab(tb.key);setLightboxIndex(null);setActiveVideo(null);}}
               className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
                 tab === tb.key
                   ? "border-accent bg-accent text-[#1a1306]"
@@ -202,7 +190,7 @@ export function PhotoGallery() {
 
             <button
               type="button"
-              aria-label="Previous"
+              aria-label={t(labels.previous)}
               onClick={(e) => {
                 e.stopPropagation();
                 prev();
@@ -228,7 +216,7 @@ export function PhotoGallery() {
 
             <button
               type="button"
-              aria-label="Next"
+              aria-label={t(labels.next)}
               onClick={(e) => {
                 e.stopPropagation();
                 next();
@@ -272,7 +260,7 @@ export function PhotoGallery() {
                   <X className="h-5 w-5" />
                 </button>
               </div>
-              <VideoPlayer src={activeVideo.src} title={t(activeVideo.title)} autoplay />
+              <VideoPlayer mediaId={activeVideo.id} src={activeVideo.src} title={t(activeVideo.title)} autoplay />
             </motion.div>
           </motion.div>
         ) : null}

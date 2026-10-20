@@ -11,7 +11,7 @@ const rubik = Rubik({
 
 export const metadata: Metadata = {
   // TODO: once deployed, set this to your live URL (e.g. https://<project>.pages.dev).
-  metadataBase: new URL("https://your-name.pages.dev"),
+  metadataBase: new URL("https://ibrahimissa-actor.issavi.workers.dev"),
   title: {
     default: "Ibrahim Issa — Actor",
     template: "%s · Ibrahim Issa",

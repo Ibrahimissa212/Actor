@@ -1,10 +1,12 @@
 "use client";
 
+import { useContent } from "@/lib/content";
+
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Play, X } from "lucide-react";
-import { ui, useLanguage } from "@/lib/i18n";
-import { videos, type VideoItem } from "@/content/videos";
+import { useLanguage } from "@/lib/i18n";
+import { type VideoItem } from "@/content/videos";
 import { Section, SectionHeading } from "./Section";
 import { VideoPlayer } from "./VideoPlayer";
 import { VideoThumb } from "./VideoThumb";
@@ -21,6 +23,7 @@ function VideoCard({
   return (
     <button
       type="button"
+      data-media-id={video.id}
       onClick={() => onPlay(video)}
       className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-bg-card text-start transition-colors hover:border-accent"
     >
@@ -74,32 +77,19 @@ function CategoryBlock({
 }
 
 export function VideoGallery() {
+  const { videos, ui, labels, categoryOrder, videoLayout } = useContent();
   const { t } = useLanguage();
   const [active, setActive] = useState<VideoItem | null>(null);
-
-  const commercial = videos.filter((v) => v.category === "commercial");
-  const professional = videos.filter((v) => v.category === "professional");
-  const course = videos.filter((v) => v.category === "course");
 
   return (
     <Section id="video">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
-          eyebrow={{ he: "תיק עבודות", en: "Portfolio", ar: "أعمالي" }}
-          title={{ he: "וידאו", en: "Video", ar: "فيديو" }}
+          eyebrow={labels.portfolioEyebrow}
+          title={labels.videoTitle}
         />
 
-        <CategoryBlock
-          titleKey={ui.video.commercial}
-          items={commercial}
-          onPlay={setActive}
-        />
-        <CategoryBlock titleKey={ui.video.course} items={course} onPlay={setActive} />
-        <CategoryBlock
-          titleKey={ui.video.professional}
-          items={professional}
-          onPlay={setActive}
-        />
+        {videoLayout === 'custom' ? <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{videos.filter(v => !v.hidden).map(v => <VideoCard key={v.id} video={v} onPlay={setActive} />)}</div> : categoryOrder.map(category => <CategoryBlock key={category} titleKey={ui.video[category]} items={videos.filter(v => !v.hidden && v.category === category)} onPlay={setActive} />)}
       </div>
 
       {/* Player modal */}
@@ -134,6 +124,7 @@ export function VideoGallery() {
                 </button>
               </div>
               <VideoPlayer
+                mediaId={active.id}
                 src={active.src}
                 poster={active.poster}
                 title={t(active.title)}

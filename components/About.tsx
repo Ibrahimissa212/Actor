@@ -1,17 +1,19 @@
 "use client";
 
+import { useContent } from "@/lib/content";
+
 import { useLanguage } from "@/lib/i18n";
-import { about } from "@/content/site";
 import { Section, SectionHeading } from "./Section";
 
 export function About() {
+  const { about, labels } = useContent();
   const { t } = useLanguage();
 
   return (
     <Section id="about" className="bg-bg-soft">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
-          eyebrow={{ he: "אודות", en: "About", ar: "عن" }}
+          eyebrow={labels.aboutEyebrow}
           title={about.heading}
         />
 

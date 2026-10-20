@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.wrangler/
+.dev.vars*
+playwright-report/
+test-results/
+wrangler.local.jsonc
