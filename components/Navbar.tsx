@@ -1,13 +1,16 @@
 "use client";
 
+import { useContent } from "@/lib/content";
+
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
-import { ui, useLanguage } from "@/lib/i18n";
-import { profile, showreel } from "@/content/site";
+import { useLanguage } from "@/lib/i18n";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
-type NavLink = { href: string; label: (typeof ui.nav)[keyof typeof ui.nav] };
+type NavLink = { href: string; label: import("@/lib/i18n").Bi };
 
+export function Navbar() {
+  const { profile, showreel, ui, labels } = useContent();
 const baseLinks: NavLink[] = [
   { href: "#about", label: ui.nav.about },
   { href: "#video", label: ui.nav.video },
@@ -15,7 +18,6 @@ const baseLinks: NavLink[] = [
   { href: "#contact", label: ui.nav.contact },
 ];
 
-export function Navbar() {
   const { t } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -66,7 +68,7 @@ export function Navbar() {
           <LanguageSwitcher />
           <button
             type="button"
-            aria-label="Menu"
+            aria-label={t(labels.menu)}
             onClick={() => setOpen((v) => !v)}
             className="rounded-md p-1 text-fg"
           >

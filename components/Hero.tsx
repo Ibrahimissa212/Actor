@@ -1,12 +1,14 @@
 "use client";
 
+import { useContent } from "@/lib/content";
+
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
-import { ui, useLanguage } from "@/lib/i18n";
-import { profile } from "@/content/site";
+import { useLanguage } from "@/lib/i18n";
 import { HeroSlideshow } from "./HeroSlideshow";
 
 export function Hero() {
+  const { profile, ui } = useContent();
   const { t } = useLanguage();
 
   return (

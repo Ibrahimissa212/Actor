@@ -4,25 +4,32 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node scripts/build.mjs && node build/seed.mjs",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "node tests/integration.mjs",
+    "preview": "wrangler dev --config wrangler.local.jsonc"
   },
   "dependencies": {
     "framer-motion": "^12.40.0",
+    "jose": "^6.2.13",
     "lucide-react": "^1.17.0",
     "next": "16.2.7",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261019.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "esbuild": "^0.28.2",
     "eslint": "^9",
     "eslint-config-next": "16.2.7",
+    "miniflare": "^5.20261019.1-beta",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.151.3"
   }
 }

@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { photos } from "@/content/photos";
+import { useContent } from "@/lib/content";
 
-const SLIDES = photos.map((p) => p.src);
 const HOLD_MS = 3500; // time each photo is shown
 const FADE_S = 1.1; // crossfade duration in seconds
 const KEN_S = (HOLD_MS + FADE_S * 1000) / 1000; // Ken Burns duration
@@ -74,6 +73,8 @@ function SlideVisual({
  * first image when reduced motion is on.
  */
 export function HeroSlideshow() {
+  const { photos } = useContent();
+  const SLIDES = photos.filter(p => !p.hidden).map(p => p.src);
   const reduceMotion = useReducedMotion();
   const [index, setIndex] = useState(0);
 
@@ -84,7 +85,7 @@ export function HeroSlideshow() {
       HOLD_MS,
     );
     return () => clearInterval(id);
-  }, [reduceMotion]);
+  }, [reduceMotion, SLIDES.length]);
 
   if (SLIDES.length === 0) return null;
 
@@ -107,7 +108,7 @@ export function HeroSlideshow() {
           exit={{ opacity: 0 }}
           transition={{ duration: FADE_S, ease: "easeInOut" }}
         >
-          <SlideVisual src={SLIDES[index]} index={index} animate />
+          <SlideVisual src={SLIDES[index % SLIDES.length]} index={index} animate />
         </motion.div>
       </AnimatePresence>
     </div>

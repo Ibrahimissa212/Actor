@@ -1,10 +1,64 @@
 {
-  // Deploy this project as a static site (Cloudflare Workers Static Assets).
-  // Our Next.js app uses `output: "export"`, which builds plain HTML/CSS/JS
-  // into the `out/` folder. No server runtime / OpenNext is needed.
-  "name": "actor",
-  "compatibility_date": "2026-08-20",
+  "name": "ibrahimissa-actor",
+  "main": "./build/worker.js",
+  "compatibility_date": "2026-10-20",
+  "workers_dev": true,
+  "preview_urls": false,
   "assets": {
-    "directory": "./out"
+    "directory": "./out",
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/",
+      "/index.html",
+      "/admin",
+      "/admin/*",
+      "/api/*",
+      "/media/*"
+    ]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "actor-backoffice",
+      "database_id": "0a8cf14f-7a4a-4ded-a3af-224a48c23439"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "actor-portfolio-media"
+    }
+  ],
+  "vars": {
+    "OWNER_EMAIL": "ibrahim.issa212@gmail.com",
+    "ACCESS_DOMAIN": "aged-limit-ab39.cloudflareaccess.com",
+    "ACCESS_AUD": ""
+  },
+  "ratelimits": [
+    {
+      "name": "RATE_LIMITER",
+      "namespace_id": "20261020",
+      "simple": {
+        "limit": 120,
+        "period": 60
+      }
+    },
+    {
+      "name": "AUTH_LIMITER",
+      "namespace_id": "20261021",
+      "simple": {
+        "limit": 10,
+        "period": 60
+      }
+    }
+  ],
+  "triggers": {
+    "crons": [
+      "15 2 * * *"
+    ]
+  },
+  "observability": {
+    "enabled": true,
+    "redact_query_string": true
   }
 }

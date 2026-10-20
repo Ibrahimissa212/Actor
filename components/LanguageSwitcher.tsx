@@ -1,5 +1,6 @@
 "use client";
 
+import { useContent } from "@/lib/content";
 import { LANGS, useLanguage, type Lang } from "@/lib/i18n";
 
 const SHORT: Record<Lang, string> = {
@@ -8,19 +9,15 @@ const SHORT: Record<Lang, string> = {
   ar: "ع",
 };
 
-const FULL: Record<Lang, string> = {
-  he: "עברית",
-  en: "English",
-  ar: "العربية",
-};
 
 export function LanguageSwitcher() {
-  const { lang, setLang } = useLanguage();
+  const { labels, ui } = useContent();
+  const { lang, setLang, t } = useLanguage();
 
   return (
     <div
       role="group"
-      aria-label="Language"
+      aria-label={t(labels.language)}
       className="inline-flex items-center gap-0.5 rounded-full border border-border bg-bg-card/60 p-0.5"
     >
       {LANGS.map((l) => {
@@ -30,7 +27,7 @@ export function LanguageSwitcher() {
             key={l}
             type="button"
             onClick={() => setLang(l)}
-            aria-label={FULL[l]}
+            aria-label={ui.langName[l]}
             aria-pressed={active}
             className={`min-w-8 rounded-full px-2.5 py-1 text-sm font-semibold transition-colors ${
               active

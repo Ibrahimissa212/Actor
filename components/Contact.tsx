@@ -1,11 +1,13 @@
 "use client";
 
+import { useContent } from "@/lib/content";
+
 import { Download, Mail, Phone } from "lucide-react";
-import { ui, useLanguage } from "@/lib/i18n";
-import { contact } from "@/content/site";
+import { useLanguage } from "@/lib/i18n";
 import { Section, SectionHeading } from "./Section";
 
 export function Contact() {
+  const { contact, ui } = useContent();
   const { t } = useLanguage();
   const socials = contact.socials.filter((s) => s.url);
 

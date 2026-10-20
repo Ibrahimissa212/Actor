@@ -24,49 +24,6 @@ export function dirFor(lang: Lang): "rtl" | "ltr" {
  */
 export type Bi = { he: string; en: string; ar?: string };
 
-/** UI chrome strings (navigation, buttons, labels). */
-export const ui = {
-  nav: {
-    about: { he: "אודות", en: "About", ar: "عن" },
-    showreel: { he: "סרטון תקציר", en: "Showreel", ar: "ملخص" },
-    video: { he: "וידאו", en: "Video", ar: "فيديو" },
-    photos: { he: "תמונות", en: "Photos", ar: "صور" },
-    contact: { he: "צור קשר", en: "Contact", ar: "تواصل" },
-  },
-  hero: {
-    scroll: { he: "גלול למטה", en: "Scroll down", ar: "مرّر للأسفل" },
-  },
-  video: {
-    commercial: {
-      he: "פרסומות ומסך",
-      en: "Commercials & Screen",
-      ar: "إعلانات وشاشة",
-    },
-    professional: {
-      he: "צילומים מקצועיים",
-      en: "Professional Shoot",
-      ar: "تصوير احترافي",
-    },
-    course: {
-      he: "קטעים מהקורס — במה ומצלמה",
-      en: "From the Course — Stage & Camera",
-      ar: "من الدورة — مسرح وكاميرا",
-    },
-    play: { he: "נגן", en: "Play", ar: "تشغيل" },
-    close: { he: "סגור", en: "Close", ar: "إغلاق" },
-  },
-  photos: {
-    title: { he: "צילומים מקצועיים", en: "Professional Photos", ar: "صور احترافية" },
-  },
-  contact: {
-    title: { he: "בואו נדבר", en: "Let's talk", ar: "لنتحدّث" },
-    cv: { he: "הורדת קורות חיים", en: "Download CV", ar: "تحميل السيرة الذاتية" },
-    email: { he: "אימייל", en: "Email", ar: "البريد الإلكتروني" },
-    phone: { he: "טלפון", en: "Phone", ar: "هاتف" },
-  },
-  langName: { he: "עברית", en: "English", ar: "العربية" },
-} as const;
-
 type LanguageContextValue = {
   lang: Lang;
   dir: "rtl" | "ltr";
@@ -85,8 +42,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   // Restore persisted choice on mount.
   useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
+    let stored: string | null = null;
+    try { stored = window.localStorage.getItem(STORAGE_KEY); } catch {}
     if (stored === "he" || stored === "en" || stored === "ar") {
+      // Restore a browser preference after matching the server-rendered language.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLangState(stored);
     }
   }, []);
@@ -96,7 +56,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     const root = document.documentElement;
     root.lang = lang;
     root.dir = dirFor(lang);
-    window.localStorage.setItem(STORAGE_KEY, lang);
+    try { window.localStorage.setItem(STORAGE_KEY, lang); } catch {}
   }, [lang]);
 
   const setLang = useCallback((next: Lang) => setLangState(next), []);
@@ -116,7 +76,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       setLang,
       toggle,
       // Arabic falls back to Hebrew when a string hasn't been translated.
-      t: (v: Bi) => v[lang] ?? v.he,
+      t: (v: Bi) => lang === "ar" ? (v.ar || v.he) : v[lang],
     }),
     [lang, setLang, toggle],
   );
